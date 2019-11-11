@@ -1,0 +1,24 @@
+version: '3'
+services:
+  datadog-agent:
+    image: "datadog/agent:latest"
+    environment:
+      DD_API_KEY: ${DD_API_KEY}
+      DD_HOSTNAME: "${NAME}-laptop"
+      DD_APM_ENABLED: "true"
+      DD_LOGS_ENABLED: "true"
+      DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
+      DD_AC_EXCLUDE: "name:datadog-agent"
+      DD_PROCESS_AGENT_ENABLED: "true"
+      DD_APM_NON_LOCAL_TRAFFIC: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+  dog-facts-inc:
+    build: .
+    ports:
+      - "5000:5000"
+    labels:
+      com.datadoghq.ad.logs: '[{"source":"python", "service": "dog-facts-inc"}]'

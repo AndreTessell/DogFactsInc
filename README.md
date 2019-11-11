@@ -28,5 +28,15 @@ Before coming to this workshop you should have:
 
 **TODO** Add slides
 
+## Steps
+
+1. Clone this repo
+   
+   ```bash
+   $ git clone https://github.com/andrewelizondo/DogFactsInc
+   $ cd DogFactsInc
+   ```
+
+2. Start the Datadog agent
 
 
