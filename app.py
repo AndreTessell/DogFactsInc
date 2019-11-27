@@ -1,7 +1,7 @@
 import logging
 # set up the datadog tracer https://docs.datadoghq.com/tracing/setup/python/
-from ddtrace import patch_all, tracer, patch
-from ddtrace.constants import ANALYTICS_SAMPLE_RATE_KEY
+from ddtrace import patch_all, tracer
+import ddtrace
 
 log = logging.getLogger()
 log.level = logging.INFO
@@ -37,6 +37,9 @@ GOOD_BOYS = [
 def dog_image():
   dog_image = requests.get(DOG_IMAGE_SERVICE).json()
   image_url = dog_image.get('message')
+  # find out how big the image is
+  size = requests.get(image_url, stream=True).headers['Content-length']
+  app.logger.info("File size of image %s" % size)
   breed = extract_breed(image_url)
   # set the breed at the root span to create a facet on
   root_span = tracer.get_call_context().get_current_root_span()
@@ -44,12 +47,10 @@ def dog_image():
   # set the url as a tag on this span
   tracer.current_span().set_tag('dog.image', image_url)
   if breed in GOOD_BOYS:
-    root_span.set_tag('good_boy', True)
-    app.logger.info("This was indeed a good boye - breed=%s" % breed)
-  else
+    root_span.set_tag('good_boy', 'true')
+    app.logger.info("Very very good boye - breed=%s" % breed)
+  else:
     app.logger.info("Still a good boye - breed=%s" % breed)
-  # turn on app analytics for this span
-  tracer.current_span().set_tag(ANALYTICS_SAMPLE_RATE_KEY, True)
   return image_url
 
 @tracer.wrap('dog.fact', service='dog-fact-service', span_type='web')
@@ -59,9 +60,6 @@ def dog_fact():
   app.logger.info("Important dog fact - %s" % fact)
   # set the dog fact on this span as a tag
   tracer.current_span().set_tag('dog.fact', fact)
-  # turn on app analytics for this span
-  tracer.current_span().set_tag(ANALYTICS_SAMPLE_RATE_KEY, True)
-
   return fact
 
 def extract_breed(url):

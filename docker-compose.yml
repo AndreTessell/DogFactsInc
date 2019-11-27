@@ -5,12 +5,14 @@ services:
     environment:
       DD_API_KEY: ${DD_API_KEY}
       DD_HOSTNAME: "${NAME}-laptop"
+      DD_TAGS: "env:${NAME}-dogfacts"
       DD_APM_ENABLED: "true"
       DD_LOGS_ENABLED: "true"
       DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
       DD_AC_EXCLUDE: "name:datadog-agent"
       DD_PROCESS_AGENT_ENABLED: "true"
       DD_APM_NON_LOCAL_TRAFFIC: "true"
+      DD_APM_ANALYZED_SPANS: "dog-facts-inc|flask.request=1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro

@@ -15,8 +15,8 @@ COPY . /app
 
 # Datadog Configuration
 ENV DD_AGENT_HOST=datadog-agent
-ENV DATADOG_SERVICE_NAME=dog-facts-inc
 ENV DD_TRACE_ANALYTICS_ENABLED=true
+ENV DATADOG_SERVICE_NAME=dog-facts-inc
 ENV DD_LOGS_INJECTION=true
 
 EXPOSE 5000
