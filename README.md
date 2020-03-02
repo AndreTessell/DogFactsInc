@@ -25,7 +25,4 @@ Before coming to this workshop you should have:
 - A code editor on your laptop (e.g. VSCode, Sublime, Atom)
 - A terminal
 
-## Slides
-
-**TODO** Add slides
 
