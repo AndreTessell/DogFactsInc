@@ -57,7 +57,7 @@ def dog_image():
   quality = image_quality(size)
   app.logger.info("Image quality is %s" % quality)
   # TODO: we should add the quality as a tag here
-  root_span.set_tag('quality', quality)
+  # root_span.set_tag('tag_name', tag_value)
   return image_url
 
 @tracer.wrap('dog.fact', service='dog-fact-service', span_type='web')

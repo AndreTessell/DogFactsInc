@@ -18,9 +18,9 @@ services:
       - /proc/:/host/proc/:ro
       - /etc/passwd:/etc/passwd:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-  dog-facts-inc:
-    build: .
-    ports:
-      - "5000:5000"
-    labels:
-      com.datadoghq.ad.logs: '[{"source":"python", "service": "dog-facts-inc"}]'
+  # dog-facts-inc:
+  #   build: .
+  #   ports:
+  #     - "5000:5000"
+  #   labels:
+  #     com.datadoghq.ad.logs: '[{"source":"python", "service": "dog-facts-inc"}]'
