@@ -1,7 +1,7 @@
 version: '3'
 services:
   datadog-agent:
-    image: "datadog/agent:latest"
+    image: "datadog/agent:6"
     environment:
       DD_API_KEY: ${DD_API_KEY}
       DD_HOSTNAME: "${NAME}-laptop"
@@ -12,7 +12,7 @@ services:
       DD_AC_EXCLUDE: "name:datadog-agent"
       DD_PROCESS_AGENT_ENABLED: "true"
       DD_APM_NON_LOCAL_TRAFFIC: "true"
-      DD_APM_ANALYZED_SPANS: "dog-facts-inc|flask.request=1"
+      DD_DOGSTATSD_NON_LOCAL_TRAFFIC: "true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro

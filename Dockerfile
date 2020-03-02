@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Andre Elizondo "andre@datadog.com"
 
 RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+    apt-get install -y python-pip python-dev apache2-utils
 
 COPY ./requirements.txt /app/requirements.txt
 
@@ -18,6 +18,7 @@ ENV DD_AGENT_HOST=datadog-agent
 ENV DD_TRACE_ANALYTICS_ENABLED=true
 ENV DATADOG_SERVICE_NAME=dog-facts-inc
 ENV DD_LOGS_INJECTION=true
+ENV DD_RUNTIME_METRICS_ENABLED=true
 
 EXPOSE 5000
 
